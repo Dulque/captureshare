@@ -1,0 +1,97 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  passwordHash String
+  name         String
+  role         String        @default("TEAM_MEMBER") // "ADMIN" | "TEAM_MEMBER"
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  createdEvents  Event[]       @relation("AdminEvents")
+  eventMembers   EventMember[]
+  uploadedPhotos Photo[]
+}
+
+model Event {
+  id          String        @id @default(cuid())
+  name        String
+  description String?
+  eventDate   DateTime?
+  status      String        @default("ACTIVE") // "ACTIVE" | "ARCHIVED"
+  adminId     String
+  admin       User          @relation("AdminEvents", fields: [adminId], references: [id], onDelete: Cascade)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  members     EventMember[]
+  photos      Photo[]
+  galleries   Gallery[]
+}
+
+model EventMember {
+  id        String   @id @default(cuid())
+  eventId   String
+  userId    String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([eventId, userId])
+}
+
+model Photo {
+  id           String         @id @default(cuid())
+  eventId      String
+  event        Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  uploadedById String
+  uploadedBy   User           @relation(fields: [uploadedById], references: [id], onDelete: Cascade)
+  filename     String
+  storageKey   String
+  storageUrl   String
+  fileSize     Int
+  mimeType     String
+  isSelected   Boolean        @default(false)
+  createdAt    DateTime       @default(now())
+
+  galleryPhotos GalleryPhoto[]
+
+  @@index([eventId])
+  @@index([uploadedById])
+}
+
+model Gallery {
+  id          String         @id @default(cuid())
+  eventId     String
+  event       Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  title       String
+  slug        String         @unique // Shareable URL key: e.g. abc123
+  pinHash     String         // Bcrypt hash of 6-digit PIN
+  isPublished Boolean        @default(false)
+  expiresAt   DateTime?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  photos      GalleryPhoto[]
+
+  @@index([eventId])
+}
+
+model GalleryPhoto {
+  id        String   @id @default(cuid())
+  galleryId String
+  photoId   String
+  gallery   Gallery  @relation(fields: [galleryId], references: [id], onDelete: Cascade)
+  photo     Photo    @relation(fields: [photoId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([galleryId, photoId])
+}
