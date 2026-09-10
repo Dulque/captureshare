@@ -39,10 +39,10 @@ export default function LoginPage() {
 
   const fillDemo = (role: 'ADMIN' | 'MEMBER') => {
     if (role === 'ADMIN') {
-      setEmail('admin@trizen.com');
+      setEmail('admin@captureshare.com');
       setPassword('Password123!');
     } else {
-      setEmail('photographer@trizen.com');
+      setEmail('photographer@captureshare.com');
       setPassword('Password123!');
     }
   };
@@ -56,7 +56,7 @@ export default function LoginPage() {
               <Camera className="w-6 h-6" />
             </div>
             <span className="font-bold text-2xl text-slate-900 tracking-tight">
-              Trizen<span className="text-indigo-600">Share</span>
+              Capture<span className="text-indigo-600">Share</span>
             </span>
           </Link>
           <h2 className="mt-4 text-xl font-bold text-slate-900">Sign in to your account</h2>
@@ -82,7 +82,7 @@ export default function LoginPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@trizen.com"
+                  placeholder="name@captureshare.com"
                   required
                   className="w-full px-3.5 py-2.5 pl-10 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                 />

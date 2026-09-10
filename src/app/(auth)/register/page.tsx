@@ -48,7 +48,7 @@ export default function RegisterPage() {
               <Camera className="w-6 h-6" />
             </div>
             <span className="font-bold text-2xl text-slate-900 tracking-tight">
-              Trizen<span className="text-indigo-600">Share</span>
+              Capture<span className="text-indigo-600">Share</span>
             </span>
           </Link>
           <h2 className="mt-4 text-xl font-bold text-slate-900">Create your account</h2>

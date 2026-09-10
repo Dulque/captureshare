@@ -178,7 +178,7 @@ export default function CustomerGalleryPage() {
 
             <div className="mt-6 pt-6 border-t border-slate-800/80 text-center">
               <span className="text-[11px] text-slate-500">
-                No customer registration required • Secured by TrizenShare
+                No customer registration required • Secured by CaptureShare
               </span>
             </div>
           </div>
@@ -281,7 +281,7 @@ export default function CustomerGalleryPage() {
 
       {/* Footer */}
       <footer className="border-t border-slate-900 py-6 text-center text-xs text-slate-600">
-        Published via TrizenShare Platform • Powered by TrizenAI
+        Published via CaptureShare Platform
       </footer>
     </div>
   );

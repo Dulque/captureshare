@@ -20,7 +20,7 @@ function assert(condition: boolean, message: string) {
 
 async function runTests() {
   console.log('\n========================================');
-  console.log('🧪 TrizenShare Automated Test Suite');
+  console.log('🧪 CaptureShare Automated Test Suite');
   console.log('========================================\n');
 
   let passed = 0;
@@ -60,12 +60,12 @@ async function runTests() {
   await test('should sign and verify valid user session tokens', () => {
     const token = signUserToken({
       id: 'user_1',
-      email: 'admin@trizen.com',
+      email: 'admin@captureshare.com',
       name: 'Admin',
       role: 'ADMIN',
     });
     const decoded = verifyUserToken(token);
-    assert(decoded?.email === 'admin@trizen.com', 'Token email must match');
+    assert(decoded?.email === 'admin@captureshare.com', 'Token email must match');
     assert(decoded?.role === 'ADMIN', 'Token role must match ADMIN');
   });
 

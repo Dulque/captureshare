@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('🌱 Starting TrizenShare database seed...');
+  console.log('🌱 Starting CaptureShare database seed...');
 
   // 1. Clean existing records
   await prisma.galleryPhoto.deleteMany();
@@ -19,7 +19,7 @@ async function main() {
 
   const admin = await prisma.user.create({
     data: {
-      email: 'admin@trizen.com',
+      email: 'admin@captureshare.com',
       name: 'Rohan Sharma (Admin)',
       passwordHash,
       role: 'ADMIN',
@@ -28,7 +28,7 @@ async function main() {
 
   const teamMember = await prisma.user.create({
     data: {
-      email: 'photographer@trizen.com',
+      email: 'photographer@captureshare.com',
       name: 'Simran Kaur (Photographer)',
       passwordHash,
       role: 'TEAM_MEMBER',

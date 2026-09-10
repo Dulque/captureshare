@@ -32,7 +32,7 @@ describe('Authentication & Security Helpers', () => {
   it('should sign and verify valid user tokens', () => {
     const user = {
       id: 'usr_123',
-      email: 'admin@trizen.com',
+      email: 'admin@captureshare.com',
       name: 'Admin Test',
       role: 'ADMIN' as const,
     };

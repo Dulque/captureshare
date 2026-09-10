@@ -5,9 +5,9 @@ import { NextRequest } from 'next/server';
 import { prisma } from './db';
 import { UserSession, GallerySession } from './types';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'trizen_super_secret_jwt_key_development_2026';
-const TOKEN_COOKIE_NAME = 'trizen_token';
-const GALLERY_COOKIE_PREFIX = 'trizen_gallery_';
+const JWT_SECRET = process.env.JWT_SECRET || 'captureshare_super_secret_jwt_key_2026';
+const TOKEN_COOKIE_NAME = 'captureshare_token';
+const GALLERY_COOKIE_PREFIX = 'captureshare_gallery_';
 
 // Password helpers
 export async function hashPassword(password: string): Promise<string> {

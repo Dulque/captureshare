@@ -1,4 +1,4 @@
-# TrizenShare — Collaborative Photo Sharing & Customer Gallery Platform
+# CaptureShare — Collaborative Photo Sharing & Customer Gallery Platform
 
 A production-ready full-stack photo-sharing application designed for event photography teams. Photographers collaboratively upload event photographs directly to object storage, Admins curate and select photos, and publish customer-facing galleries protected by a 6-digit access PIN without requiring customer registration.
 
@@ -149,8 +149,8 @@ For testing and evaluation, pre-seeded accounts and operational state matching t
 
 | Role | Email | Password | Permissions |
 | :--- | :--- | :--- | :--- |
-| **Admin / Lead** | `admin@trizen.com` | `Password123!` | Create events, invite team, curate/select photos, publish galleries |
-| **Team Member** | `photographer@trizen.com` | `Password123!` | View assigned events, upload photos, view own uploads |
+| **Admin / Lead** | `admin@captureshare.com` | `Password123!` | Create events, invite team, curate/select photos, publish galleries |
+| **Team Member** | `photographer@captureshare.com` | `Password123!` | View assigned events, upload photos, view own uploads |
 
 ### Example Operational State (From Requirements Doc)
 - **Event Name**: `Arjun & Priya Wedding`
@@ -178,7 +178,7 @@ cp .env.example .env
 Default `.env` for zero-configuration local execution:
 ```env
 DATABASE_URL="file:./dev.db"
-JWT_SECRET="trizen_super_secret_jwt_key_development_2026"
+JWT_SECRET="captureshare_super_secret_jwt_key_2026"
 ```
 
 ### 3. Initialize Database & Seed Demo Data
@@ -209,7 +209,7 @@ npm test
 ```
 ```text
 ========================================
-🧪 TrizenShare Automated Test Suite
+🧪 CaptureShare Automated Test Suite
 ========================================
 📦 Suite 1: Authentication & Token Security
   ✓ should hash and verify passwords using bcrypt

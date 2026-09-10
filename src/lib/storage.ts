@@ -21,7 +21,7 @@ const s3Client = isS3Configured
     })
   : null;
 
-const BUCKET_NAME = process.env.S3_BUCKET || 'trizen-photos';
+const BUCKET_NAME = process.env.S3_BUCKET || 'captureshare-photos';
 const LOCAL_UPLOAD_DIR = path.join(process.cwd(), 'uploads');
 
 // Ensure local upload dir exists when running in local fallback mode

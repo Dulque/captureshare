@@ -88,12 +88,12 @@ export default async function HomePage() {
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono text-left">
             <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
               <p className="font-sans font-bold text-slate-800 mb-1">Admin / Lead</p>
-              <p className="text-slate-600">Email: <span className="text-indigo-600 font-semibold">admin@trizen.com</span></p>
+              <p className="text-slate-600">Email: <span className="text-indigo-600 font-semibold">admin@captureshare.com</span></p>
               <p className="text-slate-600">Password: <span className="text-indigo-600 font-semibold">Password123!</span></p>
             </div>
             <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
               <p className="font-sans font-bold text-slate-800 mb-1">Team Member / Photographer</p>
-              <p className="text-slate-600">Email: <span className="text-emerald-600 font-semibold">photographer@trizen.com</span></p>
+              <p className="text-slate-600">Email: <span className="text-emerald-600 font-semibold">photographer@captureshare.com</span></p>
               <p className="text-slate-600">Password: <span className="text-emerald-600 font-semibold">Password123!</span></p>
             </div>
           </div>

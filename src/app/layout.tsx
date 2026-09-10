@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'TrizenShare - Event Photography Platform',
+  title: 'CaptureShare - Event Photography Platform',
   description: 'Collaborative photo-sharing and PIN-protected event galleries',
 };
 

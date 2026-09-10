@@ -101,7 +101,7 @@ export default function AddMemberModal({
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="photographer@trizen.com"
+                placeholder="photographer@captureshare.com"
                 required
                 className="w-full px-3.5 py-2.5 pl-10 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
