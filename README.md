@@ -235,6 +235,27 @@ npm test
 ========================================
 ```
 
+### Full Live E2E Integration Suite (29 Tests)
+While the dev server is running, execute the comprehensive live HTTP test suite covering every endpoint, input validation, role boundary, and the 5 specific scenarios from the specification:
+```bash
+npm run test:e2e
+```
+```text
+=============================================================
+🚀 CaptureShare Comprehensive Live E2E Integration Test Suite
+   Target: http://localhost:3000
+=============================================================
+📦 Section 1: Authentication & Input Validation (8 tests)
+📦 Section 2: Role-Based Event Operations & Isolation (6 tests)
+📦 Section 3: Photo Uploads & Object Storage Integration (4 tests)
+📦 Section 4: Admin Photo Curation & Operational State (3 tests)
+📦 Section 5: Gallery Publishing & Security Workflows (3 tests)
+📦 Section 6: Customer Access, PIN Protection & Rate Limiting (5 tests)
+
+🎉 ALL 29/29 LIVE E2E INTEGRATION TESTS PASSED (100%)
+=============================================================
+```
+
 ---
 
 ## 7. Cloud Deployment (Vercel + Neon / Supabase + Cloudflare R2 / S3)
