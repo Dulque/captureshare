@@ -22,8 +22,10 @@ export async function POST(
     const photosToInsert: Array<{
       filename: string;
       storageKey: string;
-      storageUrl: string;
-      fileSize: number;
+      storageUrl?: string;
+      publicUrl?: string;
+      fileSize?: number;
+      sizeBytes?: number;
       mimeType?: string;
     }> = Array.isArray(body.photos) ? body.photos : [body];
 
@@ -39,8 +41,8 @@ export async function POST(
             uploadedById: user.id,
             filename: p.filename,
             storageKey: p.storageKey,
-            storageUrl: p.storageUrl,
-            fileSize: p.fileSize || 0,
+            storageUrl: p.storageUrl || p.publicUrl || `/api/storage/${p.storageKey}`,
+            fileSize: p.fileSize || p.sizeBytes || 0,
             mimeType: p.mimeType || 'image/jpeg',
             isSelected: false,
           },

@@ -88,7 +88,12 @@ export async function getUploadUrl(
  * Save file locally (for local development fallback)
  */
 export async function saveLocalFile(storageKey: string, buffer: Buffer): Promise<string> {
-  const filePath = path.join(LOCAL_UPLOAD_DIR, storageKey);
+  const resolvedBase = path.resolve(LOCAL_UPLOAD_DIR);
+  const filePath = path.resolve(LOCAL_UPLOAD_DIR, storageKey);
+  if (!filePath.startsWith(resolvedBase)) {
+    throw new Error('Access denied: Path traversal attempted');
+  }
+
   const dir = path.dirname(filePath);
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
@@ -101,7 +106,11 @@ export async function saveLocalFile(storageKey: string, buffer: Buffer): Promise
  * Read file from local fallback
  */
 export async function getLocalFile(storageKey: string): Promise<{ buffer: Buffer; contentType: string } | null> {
-  const filePath = path.join(LOCAL_UPLOAD_DIR, storageKey);
+  const resolvedBase = path.resolve(LOCAL_UPLOAD_DIR);
+  const filePath = path.resolve(LOCAL_UPLOAD_DIR, storageKey);
+  if (!filePath.startsWith(resolvedBase)) {
+    return null; // Path traversal blocked
+  }
   if (!fs.existsSync(filePath)) return null;
 
   const buffer = await fs.promises.readFile(filePath);
@@ -127,8 +136,9 @@ export async function deleteFile(storageKey: string): Promise<void> {
       })
     );
   } else {
-    const filePath = path.join(LOCAL_UPLOAD_DIR, storageKey);
-    if (fs.existsSync(filePath)) {
+    const resolvedBase = path.resolve(LOCAL_UPLOAD_DIR);
+    const filePath = path.resolve(LOCAL_UPLOAD_DIR, storageKey);
+    if (filePath.startsWith(resolvedBase) && fs.existsSync(filePath)) {
       await fs.promises.unlink(filePath).catch(() => {});
     }
   }

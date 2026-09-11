@@ -14,15 +14,6 @@ export async function GET(
 
     const eventId = params.id;
 
-    // Strict access check
-    const hasAccess = await checkEventAccess(eventId, user);
-    if (!hasAccess) {
-      return NextResponse.json(
-        { error: 'Forbidden: You do not have access to this event' },
-        { status: 403 }
-      );
-    }
-
     const event = await prisma.event.findUnique({
       where: { id: eventId },
       include: {
@@ -49,6 +40,17 @@ export async function GET(
 
     if (!event) {
       return NextResponse.json({ error: 'Event not found' }, { status: 404 });
+    }
+
+    // Role and membership check
+    const isOwner = event.adminId === user.id;
+    const isMember = event.members.some((m) => m.user.id === user.id);
+
+    if (user.role === 'ADMIN' ? !isOwner : !isMember) {
+      return NextResponse.json(
+        { error: 'Forbidden: You do not have access to this event' },
+        { status: 403 }
+      );
     }
 
     const totalUploadedPhotos = await prisma.photo.count({
