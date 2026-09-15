@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { X, Key, Share2, Copy, Check, Sparkles, Loader2, Globe } from 'lucide-react';
+import { X, Key, Share2, Copy, Check, Sparkles, Loader2, Globe, RefreshCw } from 'lucide-react';
 
 interface PublishGalleryModalProps {
   eventId: string;
@@ -11,6 +11,7 @@ interface PublishGalleryModalProps {
   onClose: () => void;
   onSuccess: () => void;
   initialSlug?: string;
+  existingGallery?: { id: string; title: string; slug: string; isPublished: boolean };
 }
 
 export default function PublishGalleryModal({
@@ -20,8 +21,9 @@ export default function PublishGalleryModal({
   isOpen,
   onClose,
   onSuccess,
+  existingGallery,
 }: PublishGalleryModalProps) {
-  const [title, setTitle] = useState(`${eventName} - Official Gallery`);
+  const [title, setTitle] = useState(existingGallery?.title || `${eventName} - Curated Gallery`);
   const [pin, setPin] = useState(generateRandomPin());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -89,73 +91,78 @@ export default function PublishGalleryModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative border border-gray-100">
-        <div className="flex items-center justify-between pb-4 border-b border-gray-100">
-          <div className="flex items-center space-x-2.5">
-            <div className="w-9 h-9 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-200">
+      <div className="bg-slate-900 rounded-3xl max-w-lg w-full p-7 shadow-2xl relative border border-slate-800 text-white">
+        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400">
               <Share2 className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-gray-900">Publish Customer Gallery</h2>
-              <p className="text-xs text-gray-500">
+              <h2 className="text-lg font-bold text-white">
+                {existingGallery ? 'Update Customer Gallery' : 'Publish Customer Gallery'}
+              </h2>
+              <p className="text-xs text-slate-400">
                 {selectedCount} photo{selectedCount === 1 ? '' : 's'} selected for sharing
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 p-1 rounded-lg hover:bg-gray-100"
+            className="text-slate-400 hover:text-white p-1.5 rounded-xl hover:bg-slate-800 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {error && (
-          <div className="mt-4 p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl">
+          <div className="mt-4 p-3.5 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs rounded-xl">
             {error}
           </div>
         )}
 
         {result ? (
-          <div className="mt-5 space-y-4">
-            <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-800 text-sm">
-              🎉 <strong>Gallery Published!</strong> Share this link and PIN with your customers. No account is required for them to browse.
+          <div className="mt-6 space-y-5">
+            <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-emerald-300 text-xs leading-relaxed flex items-center space-x-2.5">
+              <Sparkles className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+              <span>
+                <strong>Gallery Published!</strong> Share this link and 6-digit PIN with your clients. They do not need to register to view their photos.
+              </span>
             </div>
 
-            <div className="space-y-3 bg-gray-50 p-4 rounded-xl border border-gray-200 font-mono text-xs">
+            <div className="space-y-4 bg-slate-950/70 p-5 rounded-2xl border border-slate-800 font-mono text-xs">
               <div>
-                <span className="text-gray-500 block mb-1 font-sans font-medium text-xs">
-                  Gallery URL:
+                <span className="text-slate-400 block mb-1.5 font-sans font-semibold text-xs uppercase tracking-wider">
+                  Customer Gallery URL:
                 </span>
-                <div className="flex items-center justify-between bg-white p-2.5 rounded-lg border border-gray-200">
-                  <span className="truncate text-indigo-600 font-medium select-all">
+                <div className="flex items-center justify-between bg-slate-900 p-3 rounded-xl border border-slate-800">
+                  <span className="truncate text-indigo-300 font-medium select-all">
                     {result.galleryUrl}
                   </span>
                   <button
                     onClick={() => copyToClipboard(result.galleryUrl, 'url')}
-                    className="ml-2 text-gray-500 hover:text-indigo-600 p-1 flex-shrink-0"
+                    className="ml-3 text-slate-400 hover:text-white p-1 flex-shrink-0 transition-colors"
                     title="Copy URL"
                   >
-                    {copiedUrl ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                    {copiedUrl ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
 
               <div>
-                <span className="text-gray-500 block mb-1 font-sans font-medium text-xs">
+                <span className="text-slate-400 block mb-1.5 font-sans font-semibold text-xs uppercase tracking-wider">
                   Access PIN:
                 </span>
-                <div className="flex items-center justify-between bg-white p-2.5 rounded-lg border border-gray-200">
-                  <span className="text-lg font-bold tracking-widest text-gray-900 select-all">
+                <div className="flex items-center justify-between bg-slate-900 p-3 rounded-xl border border-slate-800">
+                  <span className="text-xl font-bold tracking-[0.25em] text-white select-all">
                     {result.accessPin}
                   </span>
                   <button
                     onClick={() => copyToClipboard(result.accessPin, 'pin')}
-                    className="ml-2 text-gray-500 hover:text-indigo-600 p-1 flex-shrink-0"
+                    className="ml-3 text-slate-400 hover:text-white p-1 flex-shrink-0 transition-colors"
                     title="Copy PIN"
                   >
-                    {copiedPin ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                    {copiedPin ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
@@ -164,16 +171,16 @@ export default function PublishGalleryModal({
             <div className="pt-3 flex justify-end">
               <button
                 onClick={onClose}
-                className="px-5 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors shadow-sm"
+                className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-semibold rounded-xl shadow-md transition-all"
               >
                 Done
               </button>
             </div>
           </div>
         ) : (
-          <form onSubmit={handlePublish} className="mt-4 space-y-4">
+          <form onSubmit={handlePublish} className="mt-5 space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
                 Gallery Title
               </label>
               <input
@@ -181,72 +188,53 @@ export default function PublishGalleryModal({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
-                className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                className="w-full px-4 py-2.5 text-sm bg-slate-950/70 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
 
             <div>
-              <div className="flex justify-between items-center mb-1.5">
-                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Access PIN (6 Digits)
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                  Access PIN (4–8 digits)
                 </label>
                 <button
                   type="button"
                   onClick={() => setPin(generateRandomPin())}
-                  className="text-xs text-indigo-600 hover:text-indigo-800 flex items-center space-x-1"
+                  className="text-xs text-indigo-400 hover:text-indigo-300 font-medium flex items-center space-x-1"
                 >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Generate Random PIN</span>
+                  <RefreshCw className="w-3 h-3" />
+                  <span>Generate New</span>
                 </button>
               </div>
-
-              <div className="relative">
-                <input
-                  type="text"
-                  maxLength={8}
-                  value={pin}
-                  onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
-                  placeholder="e.g. 482917"
-                  required
-                  className="w-full px-3.5 py-2.5 pl-10 text-base tracking-widest font-mono font-semibold border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                />
-                <Key className="w-4 h-4 text-gray-400 absolute left-3.5 top-3.5" />
-              </div>
-              <p className="text-xs text-gray-500 mt-1.5">
-                Customers must enter this PIN to unlock and browse the published photos.
-              </p>
+              <input
+                type="text"
+                value={pin}
+                onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
+                maxLength={8}
+                required
+                className="w-full px-4 py-2.5 text-lg font-mono tracking-widest text-center bg-slate-950/70 border border-slate-800 rounded-xl text-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              />
             </div>
 
-            {selectedCount === 0 && (
-              <div className="p-3 bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-xl">
-                ⚠️ You currently have 0 photos selected. Customers will view an empty gallery until you select photos.
-              </div>
-            )}
+            <div className="p-3.5 bg-slate-950/50 rounded-xl border border-slate-800 text-[11px] text-slate-400 leading-relaxed">
+              💡 Only photos marked <strong>&quot;Selected for Client&quot;</strong> ({selectedCount} photos) will be visible in this gallery. Unselected photos remain completely private and isolated.
+            </div>
 
-            <div className="pt-4 border-t border-gray-100 flex items-center justify-end space-x-3">
+            <div className="pt-4 border-t border-slate-800 flex justify-end space-x-2.5">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-xl transition-colors"
+                className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800/80 rounded-xl transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className="px-5 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition-all flex items-center space-x-2 disabled:opacity-50"
+                disabled={isSubmitting || !pin}
+                className="px-5 py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 rounded-xl shadow-md transition-all disabled:opacity-50 flex items-center space-x-1.5"
               >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Publishing...</span>
-                  </>
-                ) : (
-                  <>
-                    <Globe className="w-4 h-4" />
-                    <span>Publish & Generate Link</span>
-                  </>
-                )}
+                {isSubmitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                <span>{existingGallery ? 'Update Gallery & PIN' : 'Publish Gallery'}</span>
               </button>
             </div>
           </form>

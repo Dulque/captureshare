@@ -58,43 +58,43 @@ export default function AddMemberModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative border border-gray-100">
-        <div className="flex items-center justify-between pb-4 border-b border-gray-100">
-          <div className="flex items-center space-x-2.5">
-            <div className="w-9 h-9 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-200">
+      <div className="bg-slate-900 rounded-3xl max-w-md w-full p-7 shadow-2xl relative border border-slate-800 text-white">
+        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
               <UserPlus className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-gray-900">Add Team Member</h2>
-              <p className="text-xs text-gray-500">Grant upload and photo access to this event</p>
+              <h2 className="text-lg font-bold text-white">Invite Team Photographer</h2>
+              <p className="text-xs text-slate-400">Grant collaborative upload access to this event</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 p-1 rounded-lg hover:bg-gray-100"
+            className="text-slate-400 hover:text-white p-1.5 rounded-xl hover:bg-slate-800 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {error && (
-          <div className="mt-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl">
+          <div className="mt-4 p-3.5 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs rounded-xl">
             {error}
           </div>
         )}
 
         {successMsg && (
-          <div className="mt-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs rounded-xl flex items-center space-x-2">
-            <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
+          <div className="mt-4 p-3.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs rounded-xl flex items-center space-x-2">
+            <CheckCircle2 className="w-4 h-4 flex-shrink-0 text-emerald-400" />
             <span>{successMsg}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+        <form onSubmit={handleSubmit} className="mt-5 space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">
-              Member Email Address
+            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+              Photographer Email Address
             </label>
             <div className="relative">
               <input
@@ -103,35 +103,35 @@ export default function AddMemberModal({
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="photographer@captureshare.com"
                 required
-                className="w-full px-3.5 py-2.5 pl-10 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                className="w-full px-4 py-2.5 pl-11 text-sm bg-slate-950/70 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
-              <Mail className="w-4 h-4 text-gray-400 absolute left-3.5 top-3.5" />
+              <Mail className="w-4 h-4 text-slate-400 absolute left-4 top-3.5" />
             </div>
-            <p className="text-xs text-gray-400 mt-1.5">
-              The user must already be registered as a Team Member on the platform.
+            <p className="text-[11px] text-slate-400 mt-1.5 leading-relaxed">
+              The photographer must already have an account on CaptureShare. Quick autofill demo: <code className="text-indigo-300">photographer@captureshare.com</code>
             </p>
           </div>
 
-          <div className="pt-3 border-t border-gray-100 flex items-center justify-end space-x-3">
+          <div className="pt-4 border-t border-slate-800 flex items-center justify-end space-x-2.5">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-xl transition-colors"
+              className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting || !email}
-              className="px-5 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition-all flex items-center space-x-2 disabled:opacity-50"
+              className="px-5 py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 rounded-xl shadow-md transition-all flex items-center space-x-2 disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Adding...</span>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  <span>Inviting...</span>
                 </>
               ) : (
-                <span>Add Member</span>
+                <span>Add Photographer</span>
               )}
             </button>
           </div>

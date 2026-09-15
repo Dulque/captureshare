@@ -12,7 +12,9 @@ import {
   AlertCircle,
   Eye,
   CheckCircle,
-  ShieldAlert
+  ShieldAlert,
+  Sparkles,
+  Maximize2
 } from 'lucide-react';
 import PhotoLightbox from '@/components/PhotoLightbox';
 
@@ -102,8 +104,11 @@ export default function CustomerGalleryPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-900 text-white">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-400" />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-950 text-white">
+        <div className="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center animate-pulse mb-3">
+          <Lock className="w-6 h-6 text-white" />
+        </div>
+        <Loader2 className="w-5 h-5 animate-spin text-indigo-400" />
       </div>
     );
   }
@@ -111,28 +116,35 @@ export default function CustomerGalleryPage() {
   // If not unlocked with PIN yet: Show PIN Entry Screen
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex flex-col justify-center items-center bg-slate-950 px-4 py-12 text-slate-100">
+      <div className="min-h-screen flex flex-col justify-center items-center bg-slate-950 px-4 py-12 text-slate-100 relative overflow-hidden">
+        {/* Ambient glows */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-indigo-600/15 rounded-full blur-3xl pointer-events-none -z-10" />
+
         <div className="max-w-md w-full text-center">
           {/* Brand icon */}
-          <div className="w-14 h-14 rounded-3xl bg-gradient-to-tr from-indigo-600 to-violet-600 flex items-center justify-center text-white mx-auto shadow-2xl shadow-indigo-500/20 mb-6 border border-indigo-400/30">
-            <Lock className="w-7 h-7" />
+          <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-indigo-600 via-indigo-700 to-violet-600 flex items-center justify-center text-white mx-auto shadow-2xl shadow-indigo-600/30 mb-6 border border-indigo-500/30">
+            <Lock className="w-8 h-8" />
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-            PIN-Protected Event Gallery
+          <span className="inline-block px-3 py-1 bg-indigo-500/10 text-indigo-400 text-[11px] font-bold uppercase tracking-wider rounded-full border border-indigo-500/20 mb-3">
+            Client Portal
+          </span>
+
+          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
+            Enter PIN to Access Gallery
           </h1>
-          <p className="text-sm text-slate-400 mt-2 max-w-sm mx-auto">
+          <p className="text-xs sm:text-sm text-slate-400 mt-2 max-w-sm mx-auto leading-relaxed">
             Please enter the 6-digit access PIN provided by your photographer or event host.
           </p>
 
-          <div className="mt-8 bg-slate-900/90 backdrop-blur-xl p-8 rounded-3xl border border-slate-800 shadow-2xl">
+          <div className="mt-8 bg-slate-900/90 backdrop-blur-xl p-8 rounded-3xl border border-slate-800 shadow-2xl shadow-black/50 text-left">
             {error && (
-              <div className="mb-6 p-3.5 bg-red-950/70 border border-red-800/80 text-red-200 text-xs rounded-2xl flex items-start space-x-2 text-left">
-                <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+              <div className="mb-6 p-4 bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs rounded-2xl flex items-start space-x-2.5">
+                <AlertCircle className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold">{error}</p>
                   {remainingAttempts !== null && remainingAttempts > 0 && (
-                    <p className="mt-0.5 text-[11px] text-red-300">
+                    <p className="mt-1 text-[11px] text-rose-300">
                       Remaining attempts before temporary lockout: {remainingAttempts}
                     </p>
                   )}
@@ -140,10 +152,10 @@ export default function CustomerGalleryPage() {
               </div>
             )}
 
-            <form onSubmit={handleVerifyPin} className="space-y-6">
+            <form onSubmit={handleVerifyPin} className="space-y-5">
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                  Access PIN
+                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2 text-center">
+                  6-Digit Event Access PIN
                 </label>
                 <div className="relative">
                   <input
@@ -154,21 +166,21 @@ export default function CustomerGalleryPage() {
                     onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
                     placeholder="••••••"
                     required
-                    className="w-full text-center text-3xl tracking-widest font-mono py-3.5 px-4 bg-slate-950 border border-slate-800 rounded-2xl text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:outline-none transition-all placeholder:text-slate-700"
+                    className="w-full text-center text-3xl tracking-[0.35em] font-mono py-4 px-4 bg-slate-950/80 border border-slate-800 rounded-2xl text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition-all placeholder:text-slate-700"
                   />
-                  <KeyRound className="w-5 h-5 text-slate-600 absolute left-4 top-4" />
+                  <KeyRound className="w-5 h-5 text-slate-500 absolute left-4 top-4" />
                 </div>
               </div>
 
               <button
                 type="submit"
                 disabled={isVerifying || !pin}
-                className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm rounded-2xl shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-4 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-semibold text-sm rounded-2xl shadow-lg shadow-indigo-600/30 hover:shadow-indigo-600/40 transition-all flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isVerifying ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Verifying Access...</span>
+                    <span>Verifying Credentials...</span>
                   </>
                 ) : (
                   <span>Unlock Gallery</span>
@@ -176,9 +188,10 @@ export default function CustomerGalleryPage() {
               </button>
             </form>
 
-            <div className="mt-6 pt-6 border-t border-slate-800/80 text-center">
-              <span className="text-[11px] text-slate-500">
-                No customer registration required • Secured by CaptureShare
+            <div className="mt-6 pt-5 border-t border-slate-800/80 text-center">
+              <span className="text-[11px] text-slate-500 flex items-center justify-center space-x-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+                <span>Zero registration required • Powered by CaptureShare</span>
               </span>
             </div>
           </div>
@@ -189,12 +202,12 @@ export default function CustomerGalleryPage() {
 
   // Unlocked: Customer Gallery Viewer
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-indigo-500 selection:text-white">
       {/* Top Banner */}
-      <header className="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur sticky top-0 z-30">
+      <header className="border-b border-slate-800/80 bg-slate-900/70 backdrop-blur-xl sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-md">
+          <div className="flex items-center space-x-3.5">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
               <Camera className="w-5 h-5" />
             </div>
             <div>
@@ -206,13 +219,13 @@ export default function CustomerGalleryPage() {
           </div>
 
           <div className="flex items-center space-x-3 text-xs">
-            <span className="hidden sm:inline px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 font-medium">
+            <span className="px-3.5 py-1.5 rounded-full bg-slate-800/90 border border-slate-700 text-slate-200 font-semibold shadow-xs">
               {photos.length} Published Photos
             </span>
             {gallery?.eventDate && (
               <span className="hidden sm:flex items-center space-x-1 text-slate-400">
                 <Calendar className="w-3.5 h-3.5" />
-                <span>{new Date(gallery.eventDate).toLocaleDateString()}</span>
+                <span>{new Date(gallery.eventDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
               </span>
             )}
           </div>
@@ -235,8 +248,9 @@ export default function CustomerGalleryPage() {
               <div
                 key={photo.id}
                 onClick={() => setLightboxIndex(idx)}
-                className="group relative break-inside-avoid rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 hover:border-indigo-500/50 cursor-pointer transition-all duration-300 shadow-md hover:shadow-2xl"
+                className="group relative break-inside-avoid rounded-2xl overflow-hidden bg-slate-900 border border-slate-800/90 hover:border-indigo-500/50 cursor-pointer transition-all duration-300 shadow-md hover:shadow-2xl hover:-translate-y-0.5"
               >
+                {/* Image */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={photo.storageUrl}
@@ -246,20 +260,26 @@ export default function CustomerGalleryPage() {
                 />
 
                 {/* Hover overlay with quick preview and download */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-3 text-white">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-3.5 text-white">
                   <div className="flex justify-end">
-                    <span className="p-1.5 rounded-xl bg-black/60 backdrop-blur text-white">
-                      <Eye className="w-4 h-4" />
+                    <span className="p-1.5 rounded-lg bg-black/60 backdrop-blur-sm text-white/90">
+                      <Maximize2 className="w-3.5 h-3.5" />
                     </span>
                   </div>
 
-                  <div>
-                    <p className="text-xs font-semibold truncate leading-tight">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-medium truncate max-w-[140px] text-slate-200">
                       {photo.filename}
-                    </p>
-                    <p className="text-[10px] text-slate-300 mt-0.5">
-                      {(photo.fileSize / (1024 * 1024)).toFixed(2)} MB
-                    </p>
+                    </span>
+                    <a
+                      href={photo.storageUrl}
+                      download={photo.filename}
+                      onClick={(e) => e.stopPropagation()}
+                      className="p-1.5 bg-indigo-600/90 hover:bg-indigo-600 rounded-lg text-white shadow transition-colors flex items-center justify-center"
+                      title="Download high-resolution image"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                    </a>
                   </div>
                 </div>
               </div>
@@ -268,21 +288,20 @@ export default function CustomerGalleryPage() {
         )}
       </main>
 
-      {/* Lightbox Modal */}
+      {/* Lightbox Viewer */}
       {lightboxIndex !== null && (
         <PhotoLightbox
-          photos={photos}
+          photos={photos.map((p) => ({
+            id: p.id,
+            filename: p.filename,
+            storageUrl: p.storageUrl,
+          }))}
           currentIndex={lightboxIndex}
           isOpen={lightboxIndex !== null}
           onClose={() => setLightboxIndex(null)}
-          onNavigate={(newIdx) => setLightboxIndex(newIdx)}
+          onNavigate={(idx) => setLightboxIndex(idx)}
         />
       )}
-
-      {/* Footer */}
-      <footer className="border-t border-slate-900 py-6 text-center text-xs text-slate-600">
-        Published via CaptureShare Platform
-      </footer>
     </div>
   );
 }

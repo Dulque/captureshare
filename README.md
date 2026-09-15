@@ -235,25 +235,35 @@ npm test
 ========================================
 ```
 
-### Full Live E2E Integration Suite (29 Tests)
-While the dev server is running, execute the comprehensive live HTTP test suite covering every endpoint, input validation, role boundary, and the 5 specific scenarios from the specification:
+### Full Live E2E Integration Suite (100 Tests across 16 Sections)
+While the dev server is running, execute the comprehensive live HTTP test suite covering every endpoint, input validation boundary, role boundary, storage pipeline, and the 5 specific scenarios from the specification:
 ```bash
 npm run test:e2e
 ```
 ```text
-=============================================================
-🚀 CaptureShare Comprehensive Live E2E Integration Test Suite
+======================================================================
+🧪 CaptureShare Comprehensive E2E & Edge-Case Test Suite
    Target: http://localhost:3000
-=============================================================
-📦 Section 1: Authentication & Input Validation (8 tests)
-📦 Section 2: Role-Based Event Operations & Isolation (6 tests)
-📦 Section 3: Photo Uploads & Object Storage Integration (4 tests)
-📦 Section 4: Admin Photo Curation & Operational State (3 tests)
-📦 Section 5: Gallery Publishing & Security Workflows (3 tests)
-📦 Section 6: Customer Access, PIN Protection & Rate Limiting (5 tests)
+======================================================================
+📦 Section 1: Authentication & Input Validation Boundaries (Tests 1–17)
+📦 Section 2: Event Management & Multi-Tenant Access Control (Tests 18–31)
+📦 Section 3: Photo Uploads, Presigning & Metadata Accuracy (Tests 32–36)
+📦 Section 4: Admin Photo Curation & Operational State Counts (Tests 37–42)
+📦 Section 5: Gallery Publishing & PIN Encryption (Tests 43–46)
+📦 Section 6: Customer Public Access & PIN Verification (Tests 47–53)
+📦 Section 7: Brute-Force Rate Limiting Protection (Test 54)
+📦 Section 8: Draft / Unpublished Gallery Access Restrictions (Tests 55–57)
+📦 Section 9: Binary Storage & File Serving Pipeline (Tests 58–64)
+📦 Section 10: Multi-Photographer Upload Isolation (Tests 65–69)
+📦 Section 11: Team Member Removal & Access Revocation (Tests 70–75)
+📦 Section 12: Gallery Re-Publishing & PIN Rotation (Tests 76–79)
+📦 Section 13: Bulk Selection Boundaries & Cross-Event Isolation (Tests 80–84)
+📦 Section 14: Security Injections & Sanitization Defenses (Tests 85–90)
+📦 Section 15: Public Frontend SSR & Page Rendering Checks (Tests 91–95)
+📦 Section 16: Event Deletion & Cascade Cleanups (Tests 96–100)
 
-🎉 ALL 29/29 LIVE E2E INTEGRATION TESTS PASSED (100%)
-=============================================================
+🎉 ALL 100/100 TESTS PASSED (100% SUCCESS RATE)
+======================================================================
 ```
 
 ---

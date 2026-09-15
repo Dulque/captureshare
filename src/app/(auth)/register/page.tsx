@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Camera, Lock, Mail, User, ShieldCheck, Users, Loader2 } from 'lucide-react';
+import { Camera, Lock, Mail, User, ShieldCheck, Users, Loader2, Sparkles } from 'lucide-react';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -40,69 +40,77 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-slate-50 p-4">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-slate-950 text-slate-100 p-4 relative overflow-hidden">
+      {/* Ambient glows */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-indigo-600/15 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-violet-600/10 rounded-full blur-3xl pointer-events-none -z-10" />
+
       <div className="max-w-md w-full">
+        {/* Brand Header */}
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center space-x-2">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+          <Link href="/" className="inline-flex items-center space-x-2.5 group">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-700 to-violet-600 flex items-center justify-center text-white shadow-xl shadow-indigo-600/30 group-hover:scale-105 transition-all">
               <Camera className="w-6 h-6" />
             </div>
-            <span className="font-bold text-2xl text-slate-900 tracking-tight">
-              Capture<span className="text-indigo-600">Share</span>
+            <span className="font-bold text-2xl text-white tracking-tight">
+              Capture<span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">Share</span>
             </span>
           </Link>
-          <h2 className="mt-4 text-xl font-bold text-slate-900">Create your account</h2>
-          <p className="text-xs text-slate-500 mt-1">
+          <h2 className="mt-5 text-2xl font-bold text-white tracking-tight">
+            Create an account
+          </h2>
+          <p className="text-xs text-slate-400 mt-1">
             Choose your role to get started with the platform
           </p>
         </div>
 
-        <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl shadow-slate-100">
+        {/* Card */}
+        <div className="bg-slate-900/90 backdrop-blur-xl p-8 rounded-3xl border border-slate-800 shadow-2xl shadow-black/40">
           {error && (
-            <div className="mb-5 p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl font-medium">
+            <div className="mb-5 p-3.5 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs rounded-xl font-medium">
               {error}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Role Selection */}
+            {/* Role Selector Cards */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
                 Select Your Role
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
-                  onClick={() => setRole('ADMIN')}
-                  className={`p-3 rounded-2xl border text-left transition-all ${
-                    role === 'ADMIN'
-                      ? 'border-indigo-600 bg-indigo-50/50 ring-2 ring-indigo-500/20'
-                      : 'border-slate-200 hover:border-slate-300'
+                  onClick={() => setRole('TEAM_MEMBER')}
+                  className={`p-3.5 rounded-2xl border text-left transition-all ${
+                    role === 'TEAM_MEMBER'
+                      ? 'border-indigo-500 bg-indigo-500/10 text-white shadow-sm'
+                      : 'border-slate-800 bg-slate-950/60 text-slate-400 hover:border-slate-700'
                   }`}
                 >
-                  <ShieldCheck className={`w-5 h-5 mb-1.5 ${role === 'ADMIN' ? 'text-indigo-600' : 'text-slate-400'}`} />
-                  <p className="text-xs font-bold text-slate-900">Admin / Lead</p>
-                  <p className="text-[10px] text-slate-500 mt-0.5">Manage events & publish</p>
+                  <Users className={`w-5 h-5 mb-2 ${role === 'TEAM_MEMBER' ? 'text-indigo-400' : 'text-slate-500'}`} />
+                  <p className="text-xs font-bold text-slate-200">Photographer</p>
+                  <p className="text-[10px] text-slate-400 mt-0.5">Upload to assigned events</p>
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => setRole('TEAM_MEMBER')}
-                  className={`p-3 rounded-2xl border text-left transition-all ${
-                    role === 'TEAM_MEMBER'
-                      ? 'border-indigo-600 bg-indigo-50/50 ring-2 ring-indigo-500/20'
-                      : 'border-slate-200 hover:border-slate-300'
+                  onClick={() => setRole('ADMIN')}
+                  className={`p-3.5 rounded-2xl border text-left transition-all ${
+                    role === 'ADMIN'
+                      ? 'border-indigo-500 bg-indigo-500/10 text-white shadow-sm'
+                      : 'border-slate-800 bg-slate-950/60 text-slate-400 hover:border-slate-700'
                   }`}
                 >
-                  <Users className={`w-5 h-5 mb-1.5 ${role === 'TEAM_MEMBER' ? 'text-indigo-600' : 'text-slate-400'}`} />
-                  <p className="text-xs font-bold text-slate-900">Team Member</p>
-                  <p className="text-[10px] text-slate-500 mt-0.5">Upload to events</p>
+                  <ShieldCheck className={`w-5 h-5 mb-2 ${role === 'ADMIN' ? 'text-indigo-400' : 'text-slate-500'}`} />
+                  <p className="text-xs font-bold text-slate-200">Lead Admin</p>
+                  <p className="text-[10px] text-slate-400 mt-0.5">Curate & publish galleries</p>
                 </button>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
                 Full Name
               </label>
               <div className="relative">
@@ -110,16 +118,16 @@ export default function RegisterPage() {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Arjun Verma"
+                  placeholder="e.g. Alex Morgan"
                   required
-                  className="w-full px-3.5 py-2.5 pl-10 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                  className="w-full px-4 py-3 pl-11 text-sm bg-slate-950/70 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition-all"
                 />
-                <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                <User className="w-4 h-4 text-slate-400 absolute left-4 top-3.5" />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
                 Email Address
               </label>
               <div className="relative">
@@ -127,36 +135,36 @@ export default function RegisterPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="arjun@example.com"
+                  placeholder="name@captureshare.com"
                   required
-                  className="w-full px-3.5 py-2.5 pl-10 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                  className="w-full px-4 py-3 pl-11 text-sm bg-slate-950/70 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition-all"
                 />
-                <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                <Mail className="w-4 h-4 text-slate-400 absolute left-4 top-3.5" />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                Password
+              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                Password (min. 6 characters)
               </label>
               <div className="relative">
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="At least 6 characters"
+                  placeholder="••••••••"
                   required
                   minLength={6}
-                  className="w-full px-3.5 py-2.5 pl-10 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                  className="w-full px-4 py-3 pl-11 text-sm bg-slate-950/70 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition-all"
                 />
-                <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                <Lock className="w-4 h-4 text-slate-400 absolute left-4 top-3.5" />
               </div>
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full mt-2 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl shadow-md shadow-indigo-200 transition-all flex items-center justify-center space-x-2 disabled:opacity-50"
+              className="w-full mt-3 py-3.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-indigo-600/30 hover:shadow-indigo-600/40 transition-all flex items-center justify-center space-x-2 disabled:opacity-50"
             >
               {isLoading ? (
                 <>
@@ -164,15 +172,15 @@ export default function RegisterPage() {
                   <span>Creating Account...</span>
                 </>
               ) : (
-                <span>Register Account</span>
+                <span>Register</span>
               )}
             </button>
           </form>
         </div>
 
-        <p className="text-center text-xs text-slate-500 mt-6">
+        <p className="text-center text-xs text-slate-400 mt-6">
           Already have an account?{' '}
-          <Link href="/login" className="text-indigo-600 font-semibold hover:underline">
+          <Link href="/login" className="text-indigo-400 font-semibold hover:text-indigo-300 transition-colors">
             Sign In
           </Link>
         </p>
