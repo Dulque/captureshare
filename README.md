@@ -273,30 +273,27 @@ npm run test:e2e
 1. **Database**: Create a free PostgreSQL database on [Neon.tech](https://neon.tech) or [Supabase](https://supabase.com).
    - In `prisma/schema.prisma`, set `provider = "postgresql"`.
    - Set `DATABASE_URL="postgresql://user:password@host/db?sslmode=require"` in Vercel Environment Variables.
-2. **Object Storage**: Create an S3 Bucket (AWS S3) or Cloudflare R2 Bucket.
-   - Configure CORS on the bucket:
-     ```json
-     [
-       {
-         "AllowedHeaders": ["*"],
-         "AllowedMethods": ["PUT", "GET", "HEAD"],
-         "AllowedOrigins": ["*"],
-         "ExposeHeaders": ["ETag"]
-       }
-     ]
-     ```
-   - Add credentials to Vercel Environment Variables:
-     ```env
-     STORAGE_PROVIDER="s3"
-     S3_REGION="auto"
-     S3_BUCKET="your-bucket-name"
-     S3_ENDPOINT="https://<account-id>.r2.cloudflarestorage.com"
-     S3_ACCESS_KEY_ID="<your-key>"
-     S3_SECRET_ACCESS_KEY="<your-secret>"
-     ```
+2. **Object Storage (Free Options)**:
+   - **Option A: Supabase Storage (100% Free, No Credit Card)**:
+     - In Supabase -> **Storage** -> click **New bucket** (`captureshare-prod`, toggle **Public** ON).
+     - Under **Settings** -> **Storage** -> **S3 Access Keys** -> create key.
+     - Environment variables:
+       ```env
+       STORAGE_PROVIDER="s3"
+       S3_REGION="us-east-1"
+       S3_BUCKET="captureshare-prod"
+       S3_ENDPOINT="https://<your-project-ref>.supabase.co/storage/v1/s3"
+       S3_ACCESS_KEY_ID="<your-supabase-key-id>"
+       S3_SECRET_ACCESS_KEY="<your-supabase-secret-key>"
+       ```
+   - **Option B: Cloudflare R2 / AWS S3**:
+     - Create an R2 or S3 bucket with read/write CORS configured.
+     - Set `S3_ENDPOINT`, `S3_ACCESS_KEY_ID`, and `S3_SECRET_ACCESS_KEY`.
+   - **Option C: Built-in Storage Adapter (Zero Setup)**:
+     - Set `STORAGE_PROVIDER="local"` to use the integrated local file pipeline.
 3. **Deploy to Vercel**:
    ```bash
-   vercel deploy
+   vercel deploy --prod
    ```
 
 ---
