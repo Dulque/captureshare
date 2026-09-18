@@ -4,6 +4,9 @@ A production-ready full-stack photo-sharing application designed for event photo
 
 Built for the **TrizenAI Full-Stack Internship Challenge**.
 
+🔗 **Live Production Deployment**: [https://captureshare-red.vercel.app](https://captureshare-red.vercel.app)  
+🖼️ **Demo Customer Gallery**: [https://captureshare-red.vercel.app/gallery/abc123](https://captureshare-red.vercel.app/gallery/abc123) (PIN: `482917`)
+
 ---
 
 ## 1. System Architecture
@@ -156,7 +159,7 @@ For testing and evaluation, pre-seeded accounts and operational state matching t
 - **Event Name**: `Arjun & Priya Wedding`
 - **Total Uploaded Photos**: 8 (with high-res sample ceremony & reception photography)
 - **Selected for Publishing**: 6
-- **Customer Gallery URL**: `http://localhost:3000/gallery/abc123`
+- **Customer Gallery URL**: `https://captureshare-red.vercel.app/gallery/abc123` (or `http://localhost:3000/gallery/abc123`)
 - **Customer Access PIN**: `482917`
 
 ---
