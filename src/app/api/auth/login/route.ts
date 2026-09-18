@@ -56,10 +56,11 @@ export async function POST(req: NextRequest) {
     });
 
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Login error:', error);
+    const message = error?.message || 'Authentication failed';
     return NextResponse.json(
-      { error: 'Authentication failed' },
+      { error: message },
       { status: 500 }
     );
   }
